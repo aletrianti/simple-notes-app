@@ -1,12 +1,11 @@
 <script setup>
-    import menu from '@/assets/icons/menu.svg';
     import date from '../utils/date';
     import { onMounted } from 'vue';
     import { useNotesStore } from '../stores/notes';
     const notesStore = useNotesStore();
 
     const openModal = (note) => {
-        notesStore.selectNote(note)
+        notesStore.openModal('view', note);
     };
 
     onMounted(() => {
@@ -16,11 +15,14 @@
 
 <template>
     <div id="list" class="w-full">
-        <ul class="flex flex-wrap justify-center">
+        <span v-if="notesStore.notes.length === 0" class="list__no-results">
+            There are no notes yet. Create your first one!
+        </span>
+
+        <ul v-else class="flex flex-wrap items-start justify-center">
             <li 
                 v-for="note in notesStore.filteredNotes"
-                class="item__card w-xs p-4 m-2 border-1 border-sky-100 rounded-xl cursor-pointer hover:border-sky-200 hover:bg-sky-50" 
-                @click="openModal(note)"
+                class="item__card w-xs p-4 m-2 border-1 border-sky-100 rounded-xl hover:border-sky-200 hover:bg-sky-20" 
             >
                 <span class="item__card__title font-bold">
                     {{ note.title }}
@@ -30,9 +32,18 @@
                     {{ note.description }}
                 </p>
 
-                <span class="item__card__updated-date italic text-gray-400 text-xs">
-                    {{ date.formatDate(note.updatedAt) }}
-                </span>
+                <div class="item__card__footer flex justify-between items-end">
+                    <span class="item__card__footer__updated-date italic text-gray-400 text-xs">
+                        {{ date.formatDate(note.updatedAt) }}
+                    </span>
+
+                    <button 
+                        class="item__card__footer__open-button p-2 pt-1 pb-1 border-1 border-sky-100 bg-white rounded-xl hover:border-sky-200 hover:bg-sky-100 cursor-pointer"
+                        @click="openModal(note)"
+                    >
+                        Open
+                    </button>
+                </div>
             </li>
         </ul>
     </div>

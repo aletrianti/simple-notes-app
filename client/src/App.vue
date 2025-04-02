@@ -1,20 +1,19 @@
 <script setup>
-import { ref, watch } from 'vue';
-import debounce from 'lodash.debounce';
 // components
 import List from './components/List.vue';
-import Note from './components/Note.vue';
+import ViewNote from './components/Modals/ViewNote.vue';
+import CreateOrEditNote from './components/Modals/CreateOrEditNote.vue';
 
 // stores
 import { useNotesStore } from './stores/notes';
 const notesStore = useNotesStore();
 
 const openCreateNoteModal = () => {
-
+  notesStore.openModal('create', { title: '', description: '' });
 };
 
 const openEditNoteModal = (note) => {
-
+  notesStore.openModal('create', note);
 };
 
 const openDeleteNoteModal = (note) => {
@@ -46,10 +45,14 @@ const openDeleteNoteModal = (note) => {
     <List/>
   </main>
 
-  <Note v-if="notesStore.selectedNote" @edit="openEditNoteModal" @delete="openDeleteNoteModal"/>
+  <ViewNote v-if="notesStore.selectedNote && notesStore.activeModal === 'view'" @edit="openEditNoteModal" @delete="openDeleteNoteModal"/>
+
+  <CreateOrEditNote v-if="notesStore.activeModal === 'create'"/>
   
 </template>
 
-<style scoped>
-
+<style>
+.note__background {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 </style>

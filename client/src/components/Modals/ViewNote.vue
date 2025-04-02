@@ -1,10 +1,10 @@
 <script setup>
     import cross from '@/assets/icons/cross.svg';
-    import { useNotesStore } from '../stores/notes';
+    import { useNotesStore } from '../../stores/notes';
     const notesStore = useNotesStore();
 
     const closeModal = () => {
-        notesStore.selectNote(null);
+        notesStore.closeModal();
     };
 </script>
 
@@ -46,9 +46,3 @@
         </div>
     </div>
 </template>
-
-<style scoped>
-.note__background {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-</style>

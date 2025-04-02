@@ -53,10 +53,16 @@ const createNote = async (req, res) => {
 const updateNote = async (req, res) => {
     try {
         const note = await Note.findById(req.params.id);
+        const {title, description} = req.body;
 
         if (!note) {
             res.status(400);
             throw Error(`Cannot find note with id ${req.params.id}`);
+        }
+
+        if (!title || !description) {
+            res.status(400);
+            throw Error("All fields are required");
         }
 
         const updatedNote = await Note.findByIdAndUpdate(
