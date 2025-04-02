@@ -50,6 +50,16 @@ export const useNotesStore = defineStore('notes', {
             }
         },
 
+        async deleteNote(note) {
+            try {
+                await api.delete(`/notes/${note._id}`, note);
+                return { success: true };
+            } catch(err) {
+                console.error(err);
+                return { success: false, error: err };
+            }
+        },
+
         selectNote(note) {
             this.selectedNote = note;
         },
