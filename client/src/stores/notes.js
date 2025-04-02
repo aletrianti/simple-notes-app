@@ -7,13 +7,15 @@ export const useNotesStore = defineStore('notes', {
         notes: [],
         selectedNote: null,
         activeModal: null, // 'view', 'create', or 'delete'
-        searchQuery: ''
+        searchQuery: '',
+        debouncedQuery: ''
     }),
 
     getters: {
-        filteredNotes(state) {
-            return state.notes.filter(note =>
-                note.title.toLowerCase().includes(state.searchQuery.toLowerCase())
+        filteredNotes() {
+            if (!this.debouncedQuery.trim()) return this.notes;
+            return this.notes.filter(note =>
+                note.title.toLowerCase().includes(this.debouncedQuery.toLowerCase())
             );
         },
     },
@@ -68,9 +70,23 @@ export const useNotesStore = defineStore('notes', {
             this.activeModal = type;
             this.selectNote(note);
         },
+
         closeModal() {
             this.activeModal = null;
             this.selectNote(null);
+        },
+
+        updateSearchQuery(query) {
+            this.searchQuery = query
+      
+            // Debounce using a private timer *inside* this action scope
+            if (this._debounceTimeout) {
+                clearTimeout(this._debounceTimeout)
+            }
+      
+            this._debounceTimeout = setTimeout(() => {
+                this.debouncedQuery = query
+            }, 300)
         }
     },
   })
