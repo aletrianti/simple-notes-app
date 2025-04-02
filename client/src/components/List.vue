@@ -19,6 +19,10 @@
         <span v-if="notesStore.notes.length === 0" class="list__no-results">
             There are no notes yet. Create your first one!
         </span>
+        
+        <span v-else-if="notesStore.filteredNotes.length === 0" class="list__no-results">
+            No notes found.
+        </span>
 
         <ul v-else class="flex flex-wrap items-start justify-center">
             <li 
@@ -49,3 +53,10 @@
         </ul>
     </div>
 </template>
+
+<style>
+.list__no-results {
+    display: flex;
+    justify-content: center;
+}
+</style>
