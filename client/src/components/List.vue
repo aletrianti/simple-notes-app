@@ -1,5 +1,6 @@
 <script setup>
     import date from '../utils/date';
+    import text from '../utils/text';
     import { onMounted } from 'vue';
     import { useNotesStore } from '../stores/notes';
     const notesStore = useNotesStore();
@@ -29,7 +30,7 @@
                 </span>
 
                 <p class="item__card_description mb-2">
-                    {{ note.description }}
+                    {{ text.truncateText(note.description, 100) }}
                 </p>
 
                 <div class="item__card__footer flex justify-between items-end">
