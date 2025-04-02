@@ -61,7 +61,7 @@ export const useNotesStore = defineStore('notes', {
         },
 
         selectNote(note) {
-            this.selectedNote = note;
+            this.selectedNote = JSON.parse(JSON.stringify(note));
         },
 
         openModal(type, note) {

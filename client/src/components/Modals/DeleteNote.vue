@@ -13,6 +13,7 @@
 
         if (result.success) {
             toast.success("Your note was deleted successfully.");
+            await notesStore.getNotes();
             closeModal();
         } else {
             toast.error("Something went wrong. Please, try again.");

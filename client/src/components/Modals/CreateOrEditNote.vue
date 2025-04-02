@@ -13,6 +13,7 @@
 
         if (result.success) {
             toast.success("Your note was created!");
+            await notesStore.getNotes();
             closeModal();
         } else {
             toast.error("Something went wrong. Please, try again.");
@@ -24,6 +25,7 @@
 
         if (result.success) {
             toast.success("Changes have been saved!");
+            await notesStore.getNotes();
             closeModal();
         } else {
             toast.error("Something went wrong. Please, try again.");
