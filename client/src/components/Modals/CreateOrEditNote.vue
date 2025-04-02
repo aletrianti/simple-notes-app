@@ -40,7 +40,7 @@
                 <input v-model="notesStore.selectedNote.title" placeholder="Add a title" class="modal__header_title w-5/6 pb-2 text-2xl font-bold border-b-1 border-sky-100"/>
 
                 <img 
-                    class="note__header_close-btn cursor-pointer w-6" 
+                    class="modal__header_close-btn cursor-pointer w-6" 
                     :src="cross" 
                     alt="close-button" 
                     @click="closeModal"
