@@ -77,15 +77,14 @@ export const useNotesStore = defineStore('notes', {
         },
 
         updateSearchQuery(query) {
-            this.searchQuery = query
-      
-            // Debounce using a private timer *inside* this action scope
+            this.searchQuery = query;
+
             if (this._debounceTimeout) {
-                clearTimeout(this._debounceTimeout)
+                clearTimeout(this._debounceTimeout);
             }
       
             this._debounceTimeout = setTimeout(() => {
-                this.debouncedQuery = query
+                this.debouncedQuery = query;
             }, 300)
         }
     },
