@@ -13,7 +13,9 @@
 
         if (result.success) {
             toast.success("Your note was created!");
-            await notesStore.getNotes();
+
+            notesStore.notes.push(result.body);
+
             closeModal();
         } else {
             toast.error("Something went wrong. Please, try again.");
@@ -25,7 +27,14 @@
 
         if (result.success) {
             toast.success("Changes have been saved!");
-            await notesStore.getNotes();
+            
+            const index = notesStore.notes.findIndex(
+                note => note._id === result.body._id
+            );
+            if (index !== -1) {
+                notesStore.notes[index] = result.body;
+            }
+
             closeModal();
         } else {
             toast.error("Something went wrong. Please, try again.");

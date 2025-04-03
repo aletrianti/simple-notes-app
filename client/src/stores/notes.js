@@ -34,8 +34,8 @@ export const useNotesStore = defineStore('notes', {
 
         async createNote(note) {
             try {
-                await api.post('/notes', note);
-                return { success: true };
+                const result = await api.post('/notes', note);
+                return { success: true, body: result.data };
             } catch(err) {
                 console.error(err);
                 return { success: false, error: err };
@@ -44,8 +44,8 @@ export const useNotesStore = defineStore('notes', {
 
         async editNote(note) {
             try {
-                await api.put(`/notes/${note._id}`, note);
-                return { success: true };
+                const result = await api.put(`/notes/${note._id}`, note);
+                return { success: true, body: result.data };
             } catch(err) {
                 console.error(err);
                 return { success: false, error: err };
@@ -55,7 +55,7 @@ export const useNotesStore = defineStore('notes', {
         async deleteNote(note) {
             try {
                 await api.delete(`/notes/${note._id}`, note);
-                return { success: true };
+                return { success: true, id: note._id };
             } catch(err) {
                 console.error(err);
                 return { success: false, error: err };

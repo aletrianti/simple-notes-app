@@ -13,7 +13,9 @@
 
         if (result.success) {
             toast.success("Your note was deleted successfully.");
-            await notesStore.getNotes();
+
+            notesStore.notes = notesStore.notes.filter(note => note._id !== result.id);
+
             closeModal();
         } else {
             toast.error("Something went wrong. Please, try again.");
